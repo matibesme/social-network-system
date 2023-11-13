@@ -1,4 +1,4 @@
-package usuario
+package nube
 
 type Usuario interface {
 	LogIn()
