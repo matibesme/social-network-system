@@ -1,10 +1,14 @@
 package nube
 
+import (
+	TDADiccionario "tdas/diccionario"
+)
+
 type Posteo interface {
 	VerID() int
 	VerContenido() string
-	VerUsuario() //Usuario
+	VerUsuario() string //Usuario
 	VerCantidadLikes() int
-	MostrarLikes() //lista o dicc usuarios
-
+	MostrarLikes() TDADiccionario.Diccionario[string, int]
+	AgregarLike(nombre string)
 }

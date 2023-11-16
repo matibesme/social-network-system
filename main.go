@@ -3,6 +3,7 @@ package main
 import (
 	"TP2/acciones"
 	errores "TP2/diseno_alumnos_tp2/errores_tp2"
+	"TP2/diseno_alumnos_tp2/nube"
 
 	"bufio"
 	"fmt"
@@ -17,13 +18,8 @@ func main() {
 		return
 	}
 
-	dicc_usuarios := acciones.PartidosEnArchivo(os.Args[1])
-
-	if dicc.Cantidad {
-
-		fmt.Println(errores.ErrorLeerArchivo{})
-		return
-	}
+	nube := nube.CrearNube()
+	acciones.UsuariosEnArchivo(os.Args[1], nube)
 
 	texto_ingresado := bufio.NewScanner(os.Stdin)
 
@@ -32,18 +28,17 @@ func main() {
 
 		switch texto_ingresado[0] {
 		case "login":
-			acciones.AccionLogIn()
-
+			acciones.AccionLogIn(texto_ingresado[1])
 		case "logout":
 			acciones.AccionLogOut()
 		case "publicar":
-			acciones.AccionPublicar()
+			acciones.AccionPublicar(texto_ingresado[1])
 		case "ver_siguiente_feed":
 			acciones.AccionVerSiguienteFeed()
 		case "likear_post":
-			acciones.AccionLikearPost()
+			acciones.AccionLikearPost(texto_ingresado[1])
 		case "mostrar_likes":
-			acciones.MostrarLikes()
+			acciones.MostrarLikes(texto_ingresado[1])
 		}
 	}
 }

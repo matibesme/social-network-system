@@ -1,11 +1,7 @@
 package nube
 
 type Usuario interface {
-	LogIn()
-
-	LogOut()
-
-	Likear()
-
-	Publicar()
+	VerNombre() string
+	VerSiguientePosteo()
+	//CargarFeed(nombre)
 }

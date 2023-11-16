@@ -1,26 +1,25 @@
 package acciones
 
 import (
+	"TP2/diseno_alumnos_tp2/nube"
 	"bufio"
 	"os"
-	Diccionario "tdas/diccionario"
 )
 
 const ID = 0
 
-func UsuariosEnArchivo(archivo_lista string) Diccionario.Diccionario[string, int] {
-	usuarios := Diccionario.CrearHash[string, int]()
+func UsuariosEnArchivo(archivo_lista string, nube nube.Nube) {
+
 	archivo, err := os.Open(archivo_lista)
 
 	if err != nil {
-		return nil
+		return
 	}
 	defer archivo.Close()
 	lector := bufio.NewScanner(archivo)
 
 	for lector.Scan() {
-		usuarios.Guardar(lector.Text(), ID+1)
+		nube.CrearRegistroUsuarios(lector.Text())
 	}
 
-	return usuarios
 }

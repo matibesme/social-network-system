@@ -1,6 +1,10 @@
 package acciones
 
-func AccionLogIn() {
+import (
+	"strconv"
+)
+
+func AccionLogIn(nombre string) {
 
 }
 
@@ -8,7 +12,7 @@ func AccionLogOut() {
 
 }
 
-func AccionPublicar() {
+func AccionPublicar(contenido string) {
 
 }
 
@@ -16,10 +20,11 @@ func AccionVerSiguienteFeed() {
 
 }
 
-func AccionLikearPost() {
-
+func AccionLikearPost(id_str string) {
+	id, err := strconv.Atoi(id_str)
 }
 
-func MostrarLikes() {
+func MostrarLikes(id_str string) {
+	id, err := strconv.Atoi(id_str)
 
 }
