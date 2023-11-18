@@ -8,4 +8,6 @@ type Nube interface {
 	Likear(id int) error
 	Publicar(contenido string) error
 	CrearRegistroUsuarios(nombre string)
+	UsuarioActual() Usuario
+	VerPosteo(id int) Posteo
 }

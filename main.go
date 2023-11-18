@@ -28,17 +28,17 @@ func main() {
 
 		switch texto_ingresado[0] {
 		case "login":
-			acciones.AccionLogIn(texto_ingresado[1])
+			acciones.AccionLogIn(texto_ingresado[1], nube)
 		case "logout":
-			acciones.AccionLogOut()
+			acciones.AccionLogOut(nube)
 		case "publicar":
-			acciones.AccionPublicar(texto_ingresado[1])
+			acciones.AccionPublicar(texto_ingresado[1], nube)
 		case "ver_siguiente_feed":
-			acciones.AccionVerSiguienteFeed()
+			acciones.AccionVerSiguienteFeed(nube)
 		case "likear_post":
-			acciones.AccionLikearPost(texto_ingresado[1])
+			acciones.AccionLikearPost(texto_ingresado[1], nube)
 		case "mostrar_likes":
-			acciones.MostrarLikes(texto_ingresado[1])
+			acciones.MostrarLikes(texto_ingresado[1], nube)
 		}
 	}
 }

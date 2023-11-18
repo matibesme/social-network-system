@@ -30,4 +30,8 @@ func (e ErrorPostInexistenteOSinLIkes) Error() string {
 	return "Error: Post inexistente o sin likes"
 }
 
+type ErrorColaPosteosVacia struct{}
 
+func (e ErrorColaPosteosVacia) Error() string {
+	return "Usuario no loggeado o no hay mas posts para ver"
+}

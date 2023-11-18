@@ -48,7 +48,13 @@ func (nube *nubeImplementacion) LogOut() error {
 }
 
 func (nube *nubeImplementacion) HayLogeado() bool {
+
 	return !nube.usuario_activo.EstaVacia()
+}
+
+func (nube *nubeImplementacion) UsuarioActual() Usuario {
+
+	return nube.usuario_activo.VerTope()
 }
 
 func (nube *nubeImplementacion) Likear(id int) error {
@@ -72,10 +78,32 @@ func (nube *nubeImplementacion) Publicar(contenido string) error {
 	posteo := CrearPosteo(nombre, contenido, nube.cantidad_posteo)
 	nube.dicc_posteos.Guardar(posteo.VerID(), posteo)
 	nube.cantidad_posteo++
+	for iter := nube.dicc_usuarios.Iterador(); iter.HaySiguiente(); iter.Siguiente() {
+		nombre_user, user := iter.VerActual()
+		if nombre_user != nombre {
+			feed := user.Feed()
+			feed.Encolar(posteo)
+		}
+	}
 	return nil
 }
 
 func (nube *nubeImplementacion) CrearRegistroUsuarios(nombre string) {
-	usuario := CrearUsuario(nombre)
+	usuario := CrearUsuario(nombre, nube.dicc_usuarios.Cantidad())
 	nube.dicc_usuarios.Guardar(nombre, usuario)
+}
+
+func (nube *nubeImplementacion) VerPosteo(id int) Posteo {
+	if !nube.dicc_posteos.Pertenece(id) {
+		return nil
+	}
+	return nube.dicc_posteos.Obtener(id)
+}
+
+
+func (nube *nubeImplementacion) comparacion(post1,post2 Posteo) {
+	us1:=nube.dicc_usuarios.Obtener(post1.VerUsuario())
+	pos1:=us1.
+	pos_us2:=
+
 }
