@@ -4,7 +4,6 @@ import (
 	"TP2/acciones"
 	errores "TP2/diseno_alumnos_tp2/errores_tp2"
 	"TP2/diseno_alumnos_tp2/nube"
-
 	"bufio"
 	"fmt"
 	"os"
@@ -38,7 +37,7 @@ func main() {
 		case "likear_post":
 			acciones.AccionLikearPost(texto_ingresado[1], nube)
 		case "mostrar_likes":
-			acciones.MostrarLikes(texto_ingresado[1], nube)
+			acciones.AccionMostrarLikes(texto_ingresado[1], nube)
 		}
 	}
 }

@@ -89,7 +89,7 @@ func (nube *nubeImplementacion) Publicar(contenido string) error {
 }
 
 func (nube *nubeImplementacion) CrearRegistroUsuarios(nombre string) {
-	usuario := CrearUsuario(nombre, nube.dicc_usuarios.Cantidad())
+	usuario := CrearUsuario(nombre, nube.dicc_usuarios.Cantidad(), nube.comparacion)
 	nube.dicc_usuarios.Guardar(nombre, usuario)
 }
 
@@ -100,10 +100,31 @@ func (nube *nubeImplementacion) VerPosteo(id int) Posteo {
 	return nube.dicc_posteos.Obtener(id)
 }
 
+func (nube *nubeImplementacion) comparacion(post1, post2 Posteo) int {
+	us1 := nube.dicc_usuarios.Obtener(post1.VerUsuario())
+	pos1 := us1.Posicion()
+	us2 := nube.dicc_usuarios.Obtener(post2.VerUsuario())
+	pos2 := us2.Posicion()
+	usuario_actual := nube.usuario_activo.VerTope()
+	pos_act := usuario_actual.Posicion()
 
-func (nube *nubeImplementacion) comparacion(post1,post2 Posteo) {
-	us1:=nube.dicc_usuarios.Obtener(post1.VerUsuario())
-	pos1:=us1.
-	pos_us2:=
+	if modulo(pos_act-pos1) < modulo(pos_act-pos2) {
+		return -1
+	} else if modulo(pos_act-pos1) > modulo(pos_act-pos2) {
+		return 1
+	}
 
+	if post1.VerID() < post2.VerID() {
+		return -1
+	}
+	return 1
+
+}
+
+func modulo(numero int) int {
+	if numero >= 0 {
+		return numero
+	} else {
+		return -numero
+	}
 }
