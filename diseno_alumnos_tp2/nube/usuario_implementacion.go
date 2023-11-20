@@ -4,40 +4,6 @@ import (
 	TDAColaP "tdas/cola_prioridad"
 )
 
-func Cmp(usuario usuarioImplementacion) func(post1, post2 Posteo) int {
-	return func(post1, post2 Posteo) int {
-		us1 := post1.VerUsuario()
-		us2 := post2.VerUsuario()
-
-		afinidad1 := modulo(usuario.posicion - us1.Posicion())
-		afinidad2 := modulo(usuario.posicion - us2.Posicion())
-		if afinidad1 < afinidad2 {
-			return 1
-		}
-		if afinidad1 > afinidad2 {
-			return -1
-		}
-
-		if post1.VerID() < post2.VerID() {
-			return 1
-		}
-		if post1.VerID() < post2.VerID() {
-			return -1
-		}
-
-		return 0
-	}
-
-}
-
-func modulo(numero int) int {
-	if numero >= 0 {
-		return numero
-	} else {
-		return -numero
-	}
-}
-
 type usuarioImplementacion struct {
 	nombre       string
 	cola_posteos TDAColaP.ColaPrioridad[Posteo]
@@ -76,4 +42,38 @@ func (usuario *usuarioImplementacion) Feed() TDAColaP.ColaPrioridad[Posteo] {
 
 	return usuario.cola_posteos
 
+}
+
+func Cmp(usuario usuarioImplementacion) func(post1, post2 Posteo) int {
+	return func(post1, post2 Posteo) int {
+		us1 := post1.VerUsuario()
+		us2 := post2.VerUsuario()
+
+		afinidad1 := modulo(usuario.posicion - us1.Posicion())
+		afinidad2 := modulo(usuario.posicion - us2.Posicion())
+		if afinidad1 < afinidad2 {
+			return 1
+		}
+		if afinidad1 > afinidad2 {
+			return -1
+		}
+
+		if post1.VerID() < post2.VerID() {
+			return 1
+		}
+		if post1.VerID() < post2.VerID() {
+			return -1
+		}
+
+		return 0
+	}
+
+}
+
+func modulo(numero int) int {
+	if numero >= 0 {
+		return numero
+	} else {
+		return -numero
+	}
 }
