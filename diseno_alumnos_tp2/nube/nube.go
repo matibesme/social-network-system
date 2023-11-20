@@ -1,5 +1,6 @@
 package nube
 
+// Nube modela lo que pasa detras de una red social cada vez que los usuarios emiten algun comando
 type Nube interface {
 	//Loguear ingresa el usuario, pasado por parametro, a su cuenta
 	Logear(nombre string) error

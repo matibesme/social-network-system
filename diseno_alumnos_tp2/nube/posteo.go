@@ -4,6 +4,7 @@ import (
 	TDADiccionario "tdas/diccionario"
 )
 
+// Posteo modela una publicacion realizada por un usuario de la red social y sus respectivos componentes
 type Posteo interface {
 	//VerID devuelve el id del posteo
 	VerID() int
