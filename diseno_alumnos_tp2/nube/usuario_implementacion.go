@@ -7,11 +7,8 @@ import (
 type usuarioImplementacion struct {
 	nombre       string
 	cola_posteos TDAColaP.ColaPrioridad[Posteo]
-	cmp          funcCmp[K]
 	posicion     int
 }
-
-type funcCmp[K comparable] func(K, K) int
 
 func CrearUsuario(nombre string, pos int, cmp func(Posteo, Posteo) int) Usuario {
 	return &usuarioImplementacion{

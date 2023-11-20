@@ -63,7 +63,7 @@ func (nube *nubeImplementacion) Likear(id int) error {
 	}
 
 	posteo := nube.dicc_posteos.Obtener(id)
-	nombre := nube.usuario_activo.Desapilar().VerNombre()
+	nombre := nube.usuario_activo.VerTope().VerNombre()
 
 	posteo.AgregarLike(nombre)
 	return nil
@@ -74,7 +74,8 @@ func (nube *nubeImplementacion) Publicar(contenido string) error {
 	if !nube.HayLogeado() {
 		return errores.ErrorSinUserLoggeado{}
 	}
-	nombre := nube.usuario_activo.Desapilar().VerNombre()
+
+	nombre := nube.usuario_activo.VerTope().VerNombre()
 	posteo := CrearPosteo(nombre, contenido, nube.cantidad_posteo)
 	nube.dicc_posteos.Guardar(posteo.VerID(), posteo)
 	nube.cantidad_posteo++
@@ -101,11 +102,14 @@ func (nube *nubeImplementacion) VerPosteo(id int) Posteo {
 }
 
 func (nube *nubeImplementacion) comparacion(post1, post2 Posteo) int {
+
+	usuario_actual := nube.usuario_activo.VerTope()
+
 	us1 := nube.dicc_usuarios.Obtener(post1.VerUsuario())
 	pos1 := us1.Posicion()
 	us2 := nube.dicc_usuarios.Obtener(post2.VerUsuario())
 	pos2 := us2.Posicion()
-	usuario_actual := nube.usuario_activo.VerTope()
+
 	pos_act := usuario_actual.Posicion()
 
 	if modulo(pos_act-pos1) < modulo(pos_act-pos2) {

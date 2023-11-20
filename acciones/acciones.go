@@ -11,19 +11,23 @@ func AccionLogIn(nombre string, nube nube.Nube) {
 	err := nube.Logear(nombre)
 	if err != nil {
 		fmt.Println(err)
+	} else {
+		fmt.Printf("Hola %s \n", nombre)
 	}
-	fmt.Sprintf("Hola %s", nombre)
+
 }
 
 func AccionLogOut(nube nube.Nube) {
 	err := nube.LogOut()
 	if err != nil {
 		fmt.Println(err)
+	} else {
+		fmt.Println("Adios")
 	}
-	fmt.Println("Adios")
 }
 
 func AccionPublicar(contenido string, nube nube.Nube) {
+
 	err := nube.Publicar(contenido)
 	if err != nil {
 		fmt.Println(err)
@@ -34,24 +38,21 @@ func AccionPublicar(contenido string, nube nube.Nube) {
 
 func AccionVerSiguienteFeed(nube nube.Nube) {
 
-	user := nube.UsuarioActual()
-
 	if !nube.HayLogeado() {
 		fmt.Println("Usuario no loggeado o no hay mas posts para ver")
-	}
-	posteo := user.VerSiguientePosteo()
-	if posteo != nil {
-		fmt.Sprintf("%s dijo: %d", posteo.VerUsuario(), posteo.VerContenido())
 	} else {
-		fmt.Println("Usuario no loggeado o no hay mas posts para ver")
+		user := nube.UsuarioActual()
+		posteo := user.VerSiguientePosteo()
+		if posteo != nil {
+			fmt.Printf("%s dijo: %s\n", posteo.VerUsuario(), posteo.VerContenido())
+		} else {
+			fmt.Println("Usuario no loggeado o no hay mas posts para ver")
+		}
 	}
 }
 
 func AccionLikearPost(id_str string, nube nube.Nube) {
-	id, err := strconv.Atoi(id_str)
-	if err != nil {
-		//hacer todo aca adentro
-	}
+	id, _ := strconv.Atoi(id_str)
 
 	errores := nube.Likear(id)
 
@@ -64,18 +65,24 @@ func AccionLikearPost(id_str string, nube nube.Nube) {
 }
 
 func AccionMostrarLikes(id_str string, nube nube.Nube) {
-	id, err := strconv.Atoi(id_str)
+	id, _ := strconv.Atoi(id_str)
 	posteo := nube.VerPosteo(id)
 	if posteo != nil {
 		dicc_likes := posteo.MostrarLikes()
-		fmt.Sprintf("El post tiene %s likes:", dicc_likes.Cantidad())
+		if dicc_likes.Cantidad() == 0 {
+			fmt.Println(errores.ErrorPostInexistenteOSinLikes{})
+		} else if dicc_likes.Cantidad() == 1 {
+			fmt.Printf("El post tiene %d likes:\n", dicc_likes.Cantidad())
+		} else {
+			fmt.Printf("El post tiene %d likes:\n", dicc_likes.Cantidad())
+		}
 		for iter := dicc_likes.Iterador(); iter.HaySiguiente(); iter.Siguiente() {
-			usuario, id := iter.VerActual()
+			usuario, _ := iter.VerActual()
 			fmt.Println(usuario)
 		}
 
 	} else {
-		fmt.Println(errores.ErrorPostInexistenteOSinLIkes{})
+		fmt.Println(errores.ErrorPostInexistenteOSinLikes{})
 	}
 
 }

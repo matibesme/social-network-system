@@ -24,9 +24,9 @@ func (e ErrorUserNoLoggeadoOPostInexistente) Error() string {
 	return "Error: Usuario no loggeado o Post inexistente"
 }
 
-type ErrorPostInexistenteOSinLIkes struct{}
+type ErrorPostInexistenteOSinLikes struct{}
 
-func (e ErrorPostInexistenteOSinLIkes) Error() string {
+func (e ErrorPostInexistenteOSinLikes) Error() string {
 	return "Error: Post inexistente o sin likes"
 }
 
