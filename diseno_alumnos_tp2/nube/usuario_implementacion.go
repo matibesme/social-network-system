@@ -4,18 +4,54 @@ import (
 	TDAColaP "tdas/cola_prioridad"
 )
 
+func Cmp(usuario usuarioImplementacion) func(post1, post2 Posteo) int {
+	return func(post1, post2 Posteo) int {
+		us1 := post1.VerUsuario()
+		us2 := post2.VerUsuario()
+
+		afinidad1 := modulo(usuario.posicion - us1.Posicion())
+		afinidad2 := modulo(usuario.posicion - us2.Posicion())
+		if afinidad1 < afinidad2 {
+			return 1
+		}
+		if afinidad1 > afinidad2 {
+			return -1
+		}
+
+		if post1.VerID() < post2.VerID() {
+			return 1
+		}
+		if post1.VerID() < post2.VerID() {
+			return -1
+		}
+
+		return 0
+	}
+
+}
+
+func modulo(numero int) int {
+	if numero >= 0 {
+		return numero
+	} else {
+		return -numero
+	}
+}
+
 type usuarioImplementacion struct {
 	nombre       string
 	cola_posteos TDAColaP.ColaPrioridad[Posteo]
+	cmp          func(user usuarioImplementacion) func(post1, post2 Posteo) int
 	posicion     int
 }
 
-func CrearUsuario(nombre string, pos int, cmp func(Posteo, Posteo) int) Usuario {
-	return &usuarioImplementacion{
-		nombre:       nombre,
-		cola_posteos: TDAColaP.CrearHeap[Posteo](cmp),
-		posicion:     pos,
-	}
+func CrearUsuario(nombre string, pos int, cmp func(user usuarioImplementacion) func(post1, post2 Posteo) int) Usuario {
+	var usuario usuarioImplementacion
+	usuario.nombre = nombre
+	usuario.cmp = cmp
+	usuario.posicion = pos
+	usuario.cola_posteos = TDAColaP.CrearHeap(cmp(usuario))
+	return &usuario
 }
 
 func (usuario *usuarioImplementacion) VerNombre() string {

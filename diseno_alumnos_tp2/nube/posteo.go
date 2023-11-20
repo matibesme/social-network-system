@@ -7,7 +7,7 @@ import (
 type Posteo interface {
 	VerID() int
 	VerContenido() string
-	VerUsuario() string //Usuario
+	VerUsuario() Usuario //Usuario
 	VerCantidadLikes() int
 	MostrarLikes() TDADiccionario.Diccionario[string, int]
 	AgregarLike(nombre string)

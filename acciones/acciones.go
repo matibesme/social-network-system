@@ -44,7 +44,7 @@ func AccionVerSiguienteFeed(nube nube.Nube) {
 		user := nube.UsuarioActual()
 		posteo := user.VerSiguientePosteo()
 		if posteo != nil {
-			fmt.Printf("%s dijo: %s\n", posteo.VerUsuario(), posteo.VerContenido())
+			fmt.Printf("%s dijo: %s\n", posteo.VerUsuario().VerNombre(), posteo.VerContenido())
 		} else {
 			fmt.Println("Usuario no loggeado o no hay mas posts para ver")
 		}

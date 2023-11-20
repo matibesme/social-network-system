@@ -75,13 +75,13 @@ func (nube *nubeImplementacion) Publicar(contenido string) error {
 		return errores.ErrorSinUserLoggeado{}
 	}
 
-	nombre := nube.usuario_activo.VerTope().VerNombre()
-	posteo := CrearPosteo(nombre, contenido, nube.cantidad_posteo)
+	usuario := nube.usuario_activo.VerTope()
+	posteo := CrearPosteo(usuario, contenido, nube.cantidad_posteo)
 	nube.dicc_posteos.Guardar(posteo.VerID(), posteo)
 	nube.cantidad_posteo++
 	for iter := nube.dicc_usuarios.Iterador(); iter.HaySiguiente(); iter.Siguiente() {
 		nombre_user, user := iter.VerActual()
-		if nombre_user != nombre {
+		if nombre_user != usuario.VerNombre() {
 			feed := user.Feed()
 			feed.Encolar(posteo)
 		}
@@ -90,7 +90,7 @@ func (nube *nubeImplementacion) Publicar(contenido string) error {
 }
 
 func (nube *nubeImplementacion) CrearRegistroUsuarios(nombre string) {
-	usuario := CrearUsuario(nombre, nube.dicc_usuarios.Cantidad(), nube.comparacion)
+	usuario := CrearUsuario(nombre, nube.dicc_usuarios.Cantidad(), Cmp)
 	nube.dicc_usuarios.Guardar(nombre, usuario)
 }
 
@@ -99,36 +99,4 @@ func (nube *nubeImplementacion) VerPosteo(id int) Posteo {
 		return nil
 	}
 	return nube.dicc_posteos.Obtener(id)
-}
-
-func (nube *nubeImplementacion) comparacion(post1, post2 Posteo) int {
-
-	usuario_actual := nube.usuario_activo.VerTope()
-
-	us1 := nube.dicc_usuarios.Obtener(post1.VerUsuario())
-	pos1 := us1.Posicion()
-	us2 := nube.dicc_usuarios.Obtener(post2.VerUsuario())
-	pos2 := us2.Posicion()
-
-	pos_act := usuario_actual.Posicion()
-
-	if modulo(pos_act-pos1) < modulo(pos_act-pos2) {
-		return -1
-	} else if modulo(pos_act-pos1) > modulo(pos_act-pos2) {
-		return 1
-	}
-
-	if post1.VerID() < post2.VerID() {
-		return -1
-	}
-	return 1
-
-}
-
-func modulo(numero int) int {
-	if numero >= 0 {
-		return numero
-	} else {
-		return -numero
-	}
 }
