@@ -90,7 +90,7 @@ func (nube *nubeImplementacion) Publicar(contenido string) error {
 }
 
 func (nube *nubeImplementacion) CrearRegistroUsuarios(nombre string) {
-	usuario := CrearUsuario(nombre, nube.dicc_usuarios.Cantidad(), Cmp)
+	usuario := CrearUsuario(nombre, nube.dicc_usuarios.Cantidad(), Comparacion)
 	nube.dicc_usuarios.Guardar(nombre, usuario)
 }
 

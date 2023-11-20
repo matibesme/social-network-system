@@ -26,17 +26,17 @@ func main() {
 		texto_ingresado := strings.Split(texto_ingresado.Text(), " ")
 
 		switch texto_ingresado[0] {
-		case "login":
+		case acciones.COMANDOS[0]:
 			acciones.AccionLogIn(texto_ingresado[1:], nube)
-		case "logout":
+		case acciones.COMANDOS[1]:
 			acciones.AccionLogOut(nube)
-		case "publicar":
+		case acciones.COMANDOS[2]:
 			acciones.AccionPublicar(texto_ingresado[1:], nube)
-		case "ver_siguiente_feed":
+		case acciones.COMANDOS[3]:
 			acciones.AccionVerSiguienteFeed(nube)
-		case "likear_post":
+		case acciones.COMANDOS[4]:
 			acciones.AccionLikearPost(texto_ingresado[1], nube)
-		case "mostrar_likes":
+		case acciones.COMANDOS[5]:
 			acciones.AccionMostrarLikes(texto_ingresado[1], nube)
 		}
 	}

@@ -44,7 +44,7 @@ func (usuario *usuarioImplementacion) Feed() TDAColaP.ColaPrioridad[Posteo] {
 
 }
 
-func Cmp(usuario usuarioImplementacion) func(post1, post2 Posteo) int {
+func Comparacion(usuario usuarioImplementacion) func(post1, post2 Posteo) int {
 	return func(post1, post2 Posteo) int {
 		us1 := post1.VerUsuario()
 		us2 := post2.VerUsuario()

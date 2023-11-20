@@ -8,6 +8,8 @@ import (
 	"strings"
 )
 
+var COMANDOS = []string{"login", "logout", "publicar", "ver_siguiente_feed", "likear_post", "mostrar_likes"}
+
 func AccionLogIn(nombre_lista []string, nube nube.Nube) {
 	nombre_usuario := strings.Join(nombre_lista, " ")
 	err := nube.Logear(nombre_usuario)
