@@ -61,7 +61,7 @@ func Cmp(usuario usuarioImplementacion) func(post1, post2 Posteo) int {
 		if post1.VerID() < post2.VerID() {
 			return 1
 		}
-		if post1.VerID() < post2.VerID() {
+		if post1.VerID() > post2.VerID() {
 			return -1
 		}
 

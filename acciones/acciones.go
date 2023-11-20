@@ -5,14 +5,16 @@ import (
 	"TP2/diseno_alumnos_tp2/nube"
 	"fmt"
 	"strconv"
+	"strings"
 )
 
-func AccionLogIn(nombre string, nube nube.Nube) {
-	err := nube.Logear(nombre)
+func AccionLogIn(nombre_lista []string, nube nube.Nube) {
+	nombre_usuario := strings.Join(nombre_lista, " ")
+	err := nube.Logear(nombre_usuario)
 	if err != nil {
 		fmt.Println(err)
 	} else {
-		fmt.Printf("Hola %s \n", nombre)
+		fmt.Printf("Hola %s\n", nombre_usuario)
 	}
 
 }
@@ -26,9 +28,11 @@ func AccionLogOut(nube nube.Nube) {
 	}
 }
 
-func AccionPublicar(contenido string, nube nube.Nube) {
+func AccionPublicar(contenido []string, nube nube.Nube) {
 
-	err := nube.Publicar(contenido)
+	publicacion := strings.Join(contenido, " ")
+
+	err := nube.Publicar(publicacion)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -44,7 +48,9 @@ func AccionVerSiguienteFeed(nube nube.Nube) {
 		user := nube.UsuarioActual()
 		posteo := user.VerSiguientePosteo()
 		if posteo != nil {
+			fmt.Printf("Post ID %d\n", posteo.VerID())
 			fmt.Printf("%s dijo: %s\n", posteo.VerUsuario().VerNombre(), posteo.VerContenido())
+			fmt.Printf("Likes: %d\n", posteo.VerCantidadLikes())
 		} else {
 			fmt.Println("Usuario no loggeado o no hay mas posts para ver")
 		}
@@ -71,14 +77,18 @@ func AccionMostrarLikes(id_str string, nube nube.Nube) {
 		dicc_likes := posteo.MostrarLikes()
 		if dicc_likes.Cantidad() == 0 {
 			fmt.Println(errores.ErrorPostInexistenteOSinLikes{})
-		} else if dicc_likes.Cantidad() == 1 {
-			fmt.Printf("El post tiene %d likes:\n", dicc_likes.Cantidad())
 		} else {
 			fmt.Printf("El post tiene %d likes:\n", dicc_likes.Cantidad())
 		}
+		contador := 0
 		for iter := dicc_likes.Iterador(); iter.HaySiguiente(); iter.Siguiente() {
 			usuario, _ := iter.VerActual()
-			fmt.Println(usuario)
+			if contador != dicc_likes.Cantidad() {
+				contador++
+				fmt.Printf("	%s\n", usuario)
+			} else {
+				fmt.Printf("	%s", usuario)
+			}
 		}
 
 	} else {

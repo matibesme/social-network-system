@@ -27,11 +27,11 @@ func main() {
 
 		switch texto_ingresado[0] {
 		case "login":
-			acciones.AccionLogIn(texto_ingresado[1], nube)
+			acciones.AccionLogIn(texto_ingresado[1:], nube)
 		case "logout":
 			acciones.AccionLogOut(nube)
 		case "publicar":
-			acciones.AccionPublicar(texto_ingresado[1], nube)
+			acciones.AccionPublicar(texto_ingresado[1:], nube)
 		case "ver_siguiente_feed":
 			acciones.AccionVerSiguienteFeed(nube)
 		case "likear_post":
