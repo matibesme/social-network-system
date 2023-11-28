@@ -3,12 +3,11 @@ package nube
 import (
 	errores "TP2/diseno_alumnos_tp2/errores_tp2"
 	TDADiccionario "tdas/diccionario"
-	TDAPila "tdas/pila"
 )
 
 type nubeImplementacion struct {
 	dicc_usuarios   TDADiccionario.Diccionario[string, Usuario]
-	usuario_activo  TDAPila.Pila[Usuario]
+	usuario_activo  Usuario
 	cantidad_posteo int
 	dicc_posteos    TDADiccionario.Diccionario[int, Posteo]
 }
@@ -16,7 +15,7 @@ type nubeImplementacion struct {
 func CrearNube() Nube {
 	return &nubeImplementacion{
 		dicc_usuarios:   TDADiccionario.CrearHash[string, Usuario](),
-		usuario_activo:  TDAPila.CrearPilaDinamica[Usuario](),
+		usuario_activo:  nil,
 		cantidad_posteo: 0,
 		dicc_posteos:    TDADiccionario.CrearHash[int, Posteo](),
 	}
@@ -32,7 +31,7 @@ func (nube *nubeImplementacion) Logear(nombre string) error {
 	}
 
 	usuario := nube.dicc_usuarios.Obtener(nombre)
-	nube.usuario_activo.Apilar(usuario)
+	nube.usuario_activo = usuario
 
 	return nil
 
@@ -43,18 +42,18 @@ func (nube *nubeImplementacion) LogOut() error {
 		return errores.ErrorSinUserLoggeado{}
 	}
 
-	nube.usuario_activo.Desapilar()
+	nube.usuario_activo = nil
 	return nil
 }
 
 func (nube *nubeImplementacion) HayLogeado() bool {
 
-	return !nube.usuario_activo.EstaVacia()
+	return nube.usuario_activo != nil
 }
 
 func (nube *nubeImplementacion) UsuarioActual() Usuario {
 
-	return nube.usuario_activo.VerTope()
+	return nube.usuario_activo
 }
 
 func (nube *nubeImplementacion) Likear(id int) error {
@@ -63,7 +62,7 @@ func (nube *nubeImplementacion) Likear(id int) error {
 	}
 
 	posteo := nube.dicc_posteos.Obtener(id)
-	nombre := nube.usuario_activo.VerTope().VerNombre()
+	nombre := nube.usuario_activo.VerNombre()
 
 	posteo.AgregarLike(nombre)
 	return nil
@@ -75,7 +74,7 @@ func (nube *nubeImplementacion) Publicar(contenido string) error {
 		return errores.ErrorSinUserLoggeado{}
 	}
 
-	usuario := nube.usuario_activo.VerTope()
+	usuario := nube.usuario_activo
 	posteo := CrearPosteo(usuario, contenido, nube.cantidad_posteo)
 	nube.dicc_posteos.Guardar(posteo.VerID(), posteo)
 	nube.cantidad_posteo++
