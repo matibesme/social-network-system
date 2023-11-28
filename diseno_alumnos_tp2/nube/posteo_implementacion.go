@@ -1,6 +1,7 @@
 package nube
 
 import (
+	"fmt"
 	"strings"
 	TDADiccionario "tdas/diccionario"
 )
@@ -39,9 +40,16 @@ func (posteo *posteoImplementacion) VerUsuario() Usuario {
 	return posteo.usuario
 }
 
-func (posteo *posteoImplementacion) MostrarLikes() TDADiccionario.Diccionario[string, int] {
+func (posteo *posteoImplementacion) MostrarLikes() []string {
 
-	return posteo.likes
+	var arregloLikes []string
+
+	for iter := posteo.likes.Iterador(); iter.HaySiguiente(); iter.Siguiente() {
+		usuario, _ := iter.VerActual()
+		arregloLikes = append(arregloLikes, usuario)
+	}
+
+	return arregloLikes
 }
 
 func (posteo *posteoImplementacion) AgregarLike(nombre string) {
@@ -49,5 +57,12 @@ func (posteo *posteoImplementacion) AgregarLike(nombre string) {
 		posteo.likes.Guardar(nombre, 1)
 		posteo.cantidad_likes++
 	}
+
+}
+
+func (posteo *posteoImplementacion) ImprimirInformacion() {
+	fmt.Printf("Post ID %d\n", posteo.VerID())
+	fmt.Printf("%s dijo: %s\n", posteo.VerUsuario().VerNombre(), posteo.VerContenido())
+	fmt.Printf("Likes: %d\n", posteo.VerCantidadLikes())
 
 }

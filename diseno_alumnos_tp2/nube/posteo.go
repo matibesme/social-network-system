@@ -1,9 +1,5 @@
 package nube
 
-import (
-	TDADiccionario "tdas/diccionario"
-)
-
 // Posteo modela una publicacion realizada por un usuario de la red social y sus respectivos componentes
 type Posteo interface {
 	//VerID devuelve el id del posteo
@@ -15,7 +11,8 @@ type Posteo interface {
 	//VerCantidadLikes devuelve la cantidad de likes que tiene el posteo
 	VerCantidadLikes() int
 	//MostrarLikes devuelve un diccionario de los nombres de usuario que le de dieron like al posteo
-	MostrarLikes() TDADiccionario.Diccionario[string, int]
+	MostrarLikes() []string
 	//AgregarLike agrega un like del nombre de usuario correspondiente
 	AgregarLike(nombre string)
+	ImprimirInformacion()
 }

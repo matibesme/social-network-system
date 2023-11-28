@@ -18,7 +18,7 @@ func main() {
 	}
 
 	nube := nube.CrearNube()
-	acciones.UsuariosEnArchivo(os.Args[1], nube)
+	acciones.LeerArchivosYCrearUsuario(os.Args[1], nube)
 
 	texto_ingresado := bufio.NewScanner(os.Stdin)
 
@@ -27,17 +27,17 @@ func main() {
 
 		switch texto_ingresado[0] {
 		case acciones.COMANDOS[0]:
-			acciones.AccionLogIn(texto_ingresado[1:], nube)
+			acciones.EjecutarLogInEImprimirRespuesta(texto_ingresado[1:], nube)
 		case acciones.COMANDOS[1]:
-			acciones.AccionLogOut(nube)
+			acciones.EjecutarLogOutEImprimirRespuesta(nube)
 		case acciones.COMANDOS[2]:
-			acciones.AccionPublicar(texto_ingresado[1:], nube)
+			acciones.EjecutarPublicarEImprimirRespuesta(texto_ingresado[1:], nube)
 		case acciones.COMANDOS[3]:
-			acciones.AccionVerSiguienteFeed(nube)
+			acciones.EjecutarVerSiguienteFeedEImprimirRespuesta(nube)
 		case acciones.COMANDOS[4]:
-			acciones.AccionLikearPost(texto_ingresado[1], nube)
+			acciones.EjecutarLikearPostEImprimirRespuesta(texto_ingresado[1], nube)
 		case acciones.COMANDOS[5]:
-			acciones.AccionMostrarLikes(texto_ingresado[1], nube)
+			acciones.EjecutarMostrarLikesEImprimirRespuesta(texto_ingresado[1], nube)
 		}
 	}
 }

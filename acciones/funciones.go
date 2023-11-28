@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-func UsuariosEnArchivo(archivo_lista string, nube nube.Nube) {
+func LeerArchivosYCrearUsuario(archivo_lista string, nube nube.Nube) {
 
 	archivo, err := os.Open(archivo_lista)
 
