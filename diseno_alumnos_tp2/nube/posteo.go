@@ -10,9 +10,11 @@ type Posteo interface {
 	VerUsuario() Usuario
 	//VerCantidadLikes devuelve la cantidad de likes que tiene el posteo
 	VerCantidadLikes() int
-	//MostrarLikes devuelve un diccionario de los nombres de usuario que le de dieron like al posteo
+	//MostrarLikes devuelve un arreglo de los nombres de usuario que le de dieron like al posteo
 	MostrarLikes() []string
 	//AgregarLike agrega un like del nombre de usuario correspondiente
 	AgregarLike(nombre string)
+	//ImprimirInformacion imprime el ID del posteo, el nombre del usuario que lo creo,
+	//el contenido y la cantidad de likes
 	ImprimirInformacion()
 }
